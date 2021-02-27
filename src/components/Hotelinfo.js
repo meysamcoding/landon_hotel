@@ -1,7 +1,22 @@
-import  react  from "react";
-import  menuServiceLink  from "./data/menu_services.json";
-import  menuAccessibillityLink  from "./data/menu_accessibility.json";
+import  react, {useState, useEffect}  from "react";
+// import  menuServiceLink  from "./data/menu_services.json";
+// import  menuAccessibillityLink  from "./data/menu_accessibility.json";
 const Hotelinfo = () => {
+
+    const [menuServiceLink, setServiceData] = useState([]);
+    const [menuAccessibillityLink, setAccessData] = useState([]);
+    const loadMenuLinksData = async() => {
+        const resp = await fetch("https://rdaf19hr8l.execute-api.us-east-1.amazonaws.com/Production/services")
+        let jsonData = await resp.json();
+        const resp_access = await fetch("https://rdaf19hr8l.execute-api.us-east-1.amazonaws.com/Production/access")
+        let jsonaccess = await resp_access.json();
+
+        setServiceData(jsonData);
+        setAccessData(jsonaccess);
+    }
+    useEffect(() => {
+        loadMenuLinksData();
+    }, []);
     return (
         <div className="scene" id="hotelinfo">
                 <article className="heading">

@@ -1,8 +1,18 @@
-import react from "react";
-import menuImgLinksData from "./data/menu_img.json";
+import react, {useState, useEffect} from "react";
+// import menuImgLinksData from "./data/menu_img.json";
 
 
 const Welcome = () => {
+  const [menuImgLinksData, setGalleryImageData] = useState([]);
+  const loadGalleryImageData = async() => {
+       const resp = await fetch("https://rdaf19hr8l.execute-api.us-east-1.amazonaws.com/Production/galleryimages")
+      let jsonData = await resp.json();
+
+      setGalleryImageData(jsonData);
+  }
+  useEffect(() => {
+    loadGalleryImageData();
+  }, []);
   return (
     <div className="scene" id="welcome">
       <article className="content">
@@ -10,7 +20,7 @@ const Welcome = () => {
           {
             menuImgLinksData.map((link) =>
 
-              <img className={`${link.class}`} src={`${link.src}`} alt={`${link.alt}`} />
+              <img className={`${link.className}`} src={`${link.src}`} alt={`${link.alt}`} />
 
             )}
 
